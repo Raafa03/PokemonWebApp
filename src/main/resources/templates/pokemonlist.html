@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon List</title>
+</head>
+<body>
+<h2>Pokémon List</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Total</th>
+        <th>Hp</th>
+        <th>Attack</th>
+        <th>Defense</th>
+        <th>Sp_atk</th>
+        <th>Sp_def</th>
+        <th>Generation</th>
+        <th>Legendary</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="pokemon : ${pokemons}">
+        <td th:text="${pokemon.id_pokemon_character}"></td>
+        <td th:text="${pokemon.pokemon_character_name}"></td>
+        <td th:text="${pokemon.total}"></td>
+        <td th:text="${pokemon.hp}"></td>
+        <td th:text="${pokemon.attack}"></td>
+        <td th:text="${pokemon.defense}"></td>
+        <td th:text="${pokemon.sp_atk}"></td>
+        <td th:text="${pokemon.sp_def}"></td>
+        <td th:text="${pokemon.generation}"></td>
+        <td th:text="${pokemon.legendary}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
