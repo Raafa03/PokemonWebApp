@@ -1,5 +1,5 @@
 package com.ips.tpsi.pokemonwebapp.entity;
-
+/*
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,42 +12,42 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class pokemon_character {
+public class PokemonCharacter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pokemon_character")
-    private Integer id_pokemon_character;
+    private Integer pokemonId;
 
     @Column(name = "pokemon_character_name")
-    private String pokemon_character_name;
+    private String pokemonName;
 
     @Column(name = "total")
-    private Integer total;
+    private Integer pokemonTotal;
 
     @Column(name = "hp")
-    private Integer hp;
+    private Integer pokemonHp;
 
     @Column(name = "attack")
-    private Integer attack;
+    private Integer pokemonAttack;
 
     @Column(name = "defense")
-    private Integer defense;
+    private Integer pokemonDefense;
 
     @Column(name = "sp_atk")
-    private Integer sp_atk;
+    private Integer pokemonSp_atk;
 
     @Column(name = "sp_def")
-    private Integer sp_def;
+    private Integer pokemonSp_def;
+
+    @Column(name = "speed")
+    private Integer pokemonSpeed;
 
     @Column(name = "generation")
-    private Integer generation;
+    private Integer pokemonGeneration;
 
     @Column(name = "legendary")
-    private String legendary;
-
-
-
-
+    private String pokemonLegendary;
 
 }
+*/

@@ -22,6 +22,7 @@ public class WebController {
     }
 
 
+
     @GetMapping("/login")
     public ModelAndView getLogin() {
         ModelAndView mv = new ModelAndView("index");
@@ -50,21 +51,6 @@ public class WebController {
         return mv;
     }
 
-    @GetMapping({"/pokemonlist"})
-    public ModelAndView pokemonlist(){
-        ModelAndView mv = new ModelAndView("pokemonlist");
-        return mv;
-    }
-
-
-
-    @GetMapping({"/username"})
-    public ModelAndView getUserByUsername(String username) {
-        User user = this.bc.getRepositoryUserInfoByUsername(username);
-        ModelAndView mv = new ModelAndView("index");
-        mv.addObject("user", user);
-        return mv;
-    }
 
     @GetMapping("/signup")
     public ModelAndView getSignUp() {
@@ -106,6 +92,16 @@ public class WebController {
         }
         return mv;
     }
+
+
+    @GetMapping({"/username"})
+    public ModelAndView getUserByUsername(String username) {
+        User user = this.bc.getRepositoryUserInfoByUsername(username);
+        ModelAndView mv = new ModelAndView("index");
+        mv.addObject("user", user);
+        return mv;
+    }
+
 
 
 }

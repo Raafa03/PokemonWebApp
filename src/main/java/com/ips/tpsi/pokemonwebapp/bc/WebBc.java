@@ -1,7 +1,7 @@
 package com.ips.tpsi.pokemonwebapp.bc;
 
-import com.ips.tpsi.pokemonwebapp.entity.User;
 
+import com.ips.tpsi.pokemonwebapp.entity.User;
 import com.ips.tpsi.pokemonwebapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,15 +36,29 @@ public class WebBc {
     }
 
 
-    
+    public void saveNewUser(String username, String password) {
+        // Verifica se o usuário já existe
+        if (repository.findUserByUsername(username) == null) {
+            User newUser = new User();
+            newUser.setUsername(username);
+            newUser.setPassword(password);
+            repository.save(newUser);
+        } else {
+
+        }
+    }
 
 
 
     public User getRepositoryUserInfoByUsername(String username) {
+
         return repository.findUserByUsername(username);
     }
 
 
 
+
 }
+
+
 
