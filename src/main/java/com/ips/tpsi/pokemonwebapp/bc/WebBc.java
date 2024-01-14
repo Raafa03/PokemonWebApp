@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Optional;
 
 // a anotação Service serve para definir serviços, neste caso o nosso BC que é onde está a componente de lógica de negócio
 
@@ -19,6 +20,8 @@ public class WebBc {
 
     @Autowired
     UserRepository repository;
+
+
 
 
     public boolean isLoginValid(String name, String password) {
@@ -57,6 +60,25 @@ public class WebBc {
 
         return repository.findUserByUsername(username);
     }
+
+
+    @Autowired
+    private PokemonCharacterRepository pokemonRepository;
+    /*
+    public PokemonCharacter updatePokemonCharacter(PokemonCharacter pokemon) {
+        return pokemonRepository.save(pokemon);
+    }
+    */
+
+    public void editPokemon(PokemonCharacter editedPokemon) {
+        pokemonRepository.save(editedPokemon);
+    }
+
+    public PokemonCharacter getPokemonById(Integer id) {
+        Optional<PokemonCharacter> optionalPokemon = pokemonRepository.findById(id);
+        return optionalPokemon.orElse(null);
+    }
+
 
 
 

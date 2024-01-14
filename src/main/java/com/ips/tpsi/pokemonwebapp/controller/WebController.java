@@ -12,7 +12,9 @@ import com.ips.tpsi.pokemonwebapp.repository.PokemonTypeLevelRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -127,10 +129,49 @@ public class WebController {
         return mv;
     }
 
+    /*
+
     @GetMapping("/edit/{id}")
     public ModelAndView edit() {
         ModelAndView mv = new ModelAndView("edit");
         return mv;
+    }
+    */
+
+
+    @GetMapping("/edit/{id}")
+    public ModelAndView getEditForm(@PathVariable Integer id) {
+        PokemonCharacter pokemonToEdit = bc.getPokemonById(id);
+        ModelAndView mv = new ModelAndView("edit");
+        mv.addObject("editedPokemon", pokemonToEdit);
+        return mv;
+    }
+
+
+    @PostMapping("/edit")
+    public String editPokemonCharacter(@ModelAttribute PokemonCharacter editedPokemon, Model model) {
+        Optional<PokemonCharacter> optionalPokemonCharacter = pokemonRepository.findById(editedPokemon.getPokemonId());
+
+        if (optionalPokemonCharacter.isPresent()) {
+            PokemonCharacter existingPokemonCharacter = optionalPokemonCharacter.get();
+            existingPokemonCharacter.setPokemonName(editedPokemon.getPokemonName());
+            existingPokemonCharacter.setPokemonTotal(editedPokemon.getPokemonTotal());
+            existingPokemonCharacter.setPokemonHp(editedPokemon.getPokemonHp());
+            existingPokemonCharacter.setPokemonAttack(editedPokemon.getPokemonAttack());
+            existingPokemonCharacter.setPokemonDefense(editedPokemon.getPokemonDefense());
+            existingPokemonCharacter.setPokemonSp_atk(editedPokemon.getPokemonSp_atk());
+            existingPokemonCharacter.setPokemonSp_def(editedPokemon.getPokemonSp_def());
+            existingPokemonCharacter.setPokemonSpeed(editedPokemon.getPokemonSpeed());
+            existingPokemonCharacter.setPokemonGeneration(editedPokemon.getPokemonGeneration());
+            existingPokemonCharacter.setPokemonLegendary(editedPokemon.getPokemonLegendary());
+
+            pokemonRepository.save(existingPokemonCharacter);
+        } else {
+            // handle the case where the id doesn't exist in the database
+            // e.g., return an error message or redirect to an error page
+        }
+
+        return "redirect:/pokemonlist";
     }
 
 
@@ -138,7 +179,16 @@ public class WebController {
     public ModelAndView deletePokemonById(@PathVariable("id") int id) {
         Optional<PokemonCharacter> pokemonOptional = pokemonRepository.findById(id);
         if (pokemonOptional.isPresent()) {
-            pokemonTypeLevelRepository.deleteById(id);
+
+            /*
+            List<PokemonTypeLevel> pokemonTypeLevels = pokemonTypeLevelRepository.findByPokemonCharacterFKId(id);
+            for (PokemonTypeLevel pokemonTypeLevel : pokemonTypeLevels) {
+                pokemonTypeLevelRepository.delete(pokemonTypeLevel);
+            }
+            */
+
+
+
             pokemonRepository.deleteById(id);
             return new ModelAndView("redirect:/pokemonlist").addObject("deleteSuccess", true);
         } else {
@@ -163,17 +213,6 @@ public class WebController {
         }
     }
     */
-
-
-
-
-
-
-
-
-
-
-
 
 
 

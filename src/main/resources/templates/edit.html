@@ -2,9 +2,54 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Edit Pokemon</title>
 </head>
 <body>
-<h1>Edit</h1>
+<h1>Edit Pokemon</h1>
+<form method="post" action="/edit">
+    <input type="hidden" name="pokemonId" th:field="*{editedPokemon.pokemonId}" />
+
+    <label for="pokemonName">Pokemon Name:</label>
+    <input type="text" name="pokemonName" th:field="*{editedPokemon.pokemonName}" />
+    <br/>
+
+    <label for="pokemonTotal">Total:</label>
+    <input type="number" name="pokemonTotal" th:field="*{editedPokemon.pokemonTotal}" />
+    <br/>
+
+    <label for="pokemonHp">HP:</label>
+    <input type="number" name="pokemonHp" th:field="*{editedPokemon.pokemonHp}" />
+    <br/>
+
+    <label for="pokemonAttack">Attack:</label>
+    <input type="number" name="pokemonAttack" th:field="*{editedPokemon.pokemonAttack}" />
+    <br/>
+
+    <label for="pokemonDefense">Defense:</label>
+    <input type="number" name="pokemonDefense" th:field="*{editedPokemon.pokemonDefense}" />
+    <br/>
+
+    <label for="pokemonSp_atk">Special Attack:</label>
+    <input type="number" name="pokemonSp_atk" th:field="*{editedPokemon.pokemonSp_atk}" />
+    <br/>
+
+    <label for="pokemonSp_def">Special Defense:</label>
+    <input type="number" name="pokemonSp_def" th:field="*{editedPokemon.pokemonSp_def}" />
+    <br/>
+
+    <label for="pokemonSpeed">Speed:</label>
+    <input type="number" name="pokemonSpeed" th:field="*{editedPokemon.pokemonSpeed}" />
+    <br/>
+
+    <label for="pokemonGeneration">Generation:</label>
+    <input type="number" name="pokemonGeneration" th:field="*{editedPokemon.pokemonGeneration}" />
+    <br/>
+
+    <label for="pokemonLegendary">Legendary:</label>
+    <input type="text" name="pokemonLegendary" th:field="*{editedPokemon.pokemonLegendary}" />
+    <br/>
+
+    <input type="submit" value="Save" />
+</form>
 </body>
 </html>

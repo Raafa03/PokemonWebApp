@@ -9,6 +9,11 @@ import java.util.List;
 
 public interface PokemonTypeLevelRepository extends JpaRepository<PokemonTypeLevel, Integer> {
 
+
+    /*
+    List<PokemonTypeLevel> findByPokemonCharacterFKId(Integer id);
+    */
+
 }
 
 
