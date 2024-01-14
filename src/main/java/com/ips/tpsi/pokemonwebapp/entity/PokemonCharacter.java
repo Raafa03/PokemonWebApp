@@ -52,6 +52,8 @@ public class PokemonCharacter {
     @Column(name = "legendary")
     private String pokemonLegendary;
 
+    @OneToMany(mappedBy = "pokemonCharacterFK", fetch = FetchType.LAZY)
+    private List<PokemonTypeLevel> types;
 
 
 }

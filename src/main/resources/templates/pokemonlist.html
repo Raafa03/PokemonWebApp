@@ -26,6 +26,8 @@
         <th>Speed</th>
         <th>Generation</th>
         <th>Legendary</th>
+        <th>Type 1</th>
+        <th>Type 2</th>
     </tr>
     </thead>
     <tbody>
@@ -41,6 +43,10 @@
         <td th:text="${pokemon.pokemonSpeed}"></td>
         <td th:text="${pokemon.pokemonGeneration}"></td>
         <td th:text="${pokemon.pokemonLegendary}"></td>
+        <td th:if="${pokemon.types != null and pokemon.types.size() > 0}" th:text="${pokemon.types[0].pokemonTypeFK.typeDesc}"></td>
+        <td th:if="${pokemon.types != null and pokemon.types.size() > 1}" th:text="${pokemon.types[1].pokemonTypeFK.typeDesc}"></td>
+        <td th:unless="${pokemon.types != null and pokemon.types.size() > 1}">No second type</td>
+
         <td>
             <a th:href="@{/edit/{id}(id=${pokemon.pokemonId})}"> <button type="button">Edit</button> </a>
             <form th:method="post" th:action="@{/delete}" th:object="${pokemon}">
@@ -48,7 +54,6 @@
                 <button type="submit">Delete</button>
             </form>
         </td>
-
     </tr>
     </tbody>
 </table>

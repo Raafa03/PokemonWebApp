@@ -14,6 +14,7 @@ import com.ips.tpsi.pokemonwebapp.repository.PokemonCharacterRepository;
 
 import com.ips.tpsi.pokemonwebapp.repository.PokemonTypeLevelRepository;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -158,6 +159,20 @@ public class WebController {
         return "redirect:/pokemonlist?deleteSuccess=true";
     }
 
+
+    /*
+    @GetMapping("/pokemonlist")
+    public ModelAndView getPokemonList(@RequestParam(name = "deleteSuccess", required = false, defaultValue = "false") boolean deleteSuccess) {
+        List<PokemonCharacter> pokemons = pokemonRepository.findAll();
+        ModelAndView mv = new ModelAndView("pokemonlist");
+        mv.addObject("pokemons", pokemons);
+        mv.addObject("deleteSuccess", deleteSuccess);
+        return mv;
+    }
+
+     */
+
+
     @GetMapping("/pokemonlist")
     public ModelAndView getPokemonList(@RequestParam(name = "deleteSuccess", required = false, defaultValue = "false") boolean deleteSuccess) {
         List<PokemonCharacter> pokemons = pokemonRepository.findAll();
@@ -168,10 +183,8 @@ public class WebController {
     }
 
 
-
-
-
-
 }
+
+
 
 
