@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokémon List</title>
+    <link rel="stylesheet" href="pokemonlist.css">
 </head>
 <body>
 <h2>Pokémon List</h2>
+
+<p th:if="${deleteSuccess}" class="alert alert-success">Pokemon deleted successfully</p>
+<p th:if="${deleteError}" class="alert alert-danger">Error deleting pokemon</p>
+
 <table>
     <thead>
     <tr>
@@ -16,8 +21,8 @@
         <th>Hp</th>
         <th>Attack</th>
         <th>Defense</th>
-        <th>Sp_atk</th>
-        <th>Sp_def</th>
+        <th>Sp. Atk</th>
+        <th>Sp. Def</th>
         <th>Speed</th>
         <th>Generation</th>
         <th>Legendary</th>
@@ -25,19 +30,25 @@
     </thead>
     <tbody>
     <tr th:each="pokemon : ${pokemons}">
-        <td th:text="${pokemon.id_pokemon_character}"></td>
-        <td th:text="${pokemon.pokemon_character_name}"></td>
-        <td th:text="${pokemon.total}"></td>
-        <td th:text="${pokemon.hp}"></td>
-        <td th:text="${pokemon.attack}"></td>
-        <td th:text="${pokemon.defense}"></td>
-        <td th:text="${pokemon.sp_atk}"></td>
-        <td th:text="${pokemon.sp_def}"></td>
-        <td th:text="${pokemon.speed}"></td>
-        <td th:text="${pokemon.generation}"></td>
-        <td th:text="${pokemon.legendary}"></td>
+        <td th:text="${pokemon.pokemonId}"></td>
+        <td th:text="${pokemon.pokemonName}"></td>
+        <td th:text="${pokemon.pokemonTotal}"></td>
+        <td th:text="${pokemon.pokemonHp}"></td>
+        <td th:text="${pokemon.pokemonAttack}"></td>
+        <td th:text="${pokemon.pokemonDefense}"></td>
+        <td th:text="${pokemon.pokemonSp_atk}"></td>
+        <td th:text="${pokemon.pokemonSp_def}"></td>
+        <td th:text="${pokemon.pokemonSpeed}"></td>
+        <td th:text="${pokemon.pokemonGeneration}"></td>
+        <td th:text="${pokemon.pokemonLegendary}"></td>
+        <td>
+            <a th:href="@{/edit/{id}(id=${pokemon.pokemonId})}"> <button type="button">Edit</button> </a>
+            <a th:href="@{/delete/{id}(id=${pokemon.pokemonId})}"> <button type="button">Delete</button> </a>
+        </td>
+
     </tr>
     </tbody>
 </table>
+
 </body>
 </html>

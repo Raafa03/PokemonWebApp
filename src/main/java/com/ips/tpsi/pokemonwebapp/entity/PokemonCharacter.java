@@ -1,5 +1,5 @@
 package com.ips.tpsi.pokemonwebapp.entity;
-/*
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -50,4 +50,3 @@ public class PokemonCharacter {
     private String pokemonLegendary;
 
 }
-*/

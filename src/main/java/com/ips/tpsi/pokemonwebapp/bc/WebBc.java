@@ -1,7 +1,10 @@
 package com.ips.tpsi.pokemonwebapp.bc;
 
 
+import com.ips.tpsi.pokemonwebapp.entity.PokemonCharacter;
+import com.ips.tpsi.pokemonwebapp.entity.PokemonTypeLevel;
 import com.ips.tpsi.pokemonwebapp.entity.User;
+import com.ips.tpsi.pokemonwebapp.repository.PokemonCharacterRepository;
 import com.ips.tpsi.pokemonwebapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,7 @@ public class WebBc {
 
     @Autowired
     UserRepository repository;
+
 
     public boolean isLoginValid(String name, String password) {
         if (name != null && password != null) {
@@ -49,12 +53,10 @@ public class WebBc {
     }
 
 
-
     public User getRepositoryUserInfoByUsername(String username) {
 
         return repository.findUserByUsername(username);
     }
-
 
 
 
