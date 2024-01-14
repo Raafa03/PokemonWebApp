@@ -43,7 +43,10 @@
         <td th:text="${pokemon.pokemonLegendary}"></td>
         <td>
             <a th:href="@{/edit/{id}(id=${pokemon.pokemonId})}"> <button type="button">Edit</button> </a>
-            <a th:href="@{/delete/{id}(id=${pokemon.pokemonId})}"> <button type="button">Delete</button> </a>
+            <form th:method="post" th:action="@{/delete}" th:object="${pokemon}">
+                <input type="hidden" name="pokemonId" th:value="${pokemon.pokemonId}" />
+                <button type="submit">Delete</button>
+            </form>
         </td>
 
     </tr>

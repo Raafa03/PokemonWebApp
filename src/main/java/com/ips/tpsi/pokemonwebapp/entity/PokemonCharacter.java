@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
+import java.util.List;
+
 @Entity
 @Table(name = "pokemon_character")
 @AllArgsConstructor
@@ -48,5 +51,7 @@ public class PokemonCharacter {
 
     @Column(name = "legendary")
     private String pokemonLegendary;
+
+
 
 }

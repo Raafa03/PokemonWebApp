@@ -5,6 +5,7 @@ import com.ips.tpsi.pokemonwebapp.entity.PokemonCharacter;
 import com.ips.tpsi.pokemonwebapp.entity.PokemonTypeLevel;
 import com.ips.tpsi.pokemonwebapp.entity.User;
 import com.ips.tpsi.pokemonwebapp.repository.PokemonCharacterRepository;
+import com.ips.tpsi.pokemonwebapp.repository.PokemonTypeLevelRepository;
 import com.ips.tpsi.pokemonwebapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,20 +65,28 @@ public class WebBc {
 
     @Autowired
     private PokemonCharacterRepository pokemonRepository;
-    /*
-    public PokemonCharacter updatePokemonCharacter(PokemonCharacter pokemon) {
-        return pokemonRepository.save(pokemon);
-    }
-    */
+
 
     public void editPokemon(PokemonCharacter editedPokemon) {
         pokemonRepository.save(editedPokemon);
     }
 
+
     public PokemonCharacter getPokemonById(Integer id) {
         Optional<PokemonCharacter> optionalPokemon = pokemonRepository.findById(id);
         return optionalPokemon.orElse(null);
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
