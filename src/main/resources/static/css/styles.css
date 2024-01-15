@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Marhey:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital@0;1&display=swap');
+
+body {
+    font-family: 'Marhey', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: url('../images/background.jpg') no-repeat center center fixed;
+    background-color: #000;
+    background-size: cover;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+nav {
+    background: rgba(255, 255, 255, 0.5);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.container ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.container li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.container a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 5px 10px;
+    border: 2px solid #333;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.container a:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+h1, h2, p {
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    color: #007bff; /* Cor azul para o título */
+}
+
+table {
+    font-family: 'Urbanist', sans-serif;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Fundo da tabela com opacidade */
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px 15px;
+    text-align: center;
+    width: auto;
+}
+
+/* Cores alternadas para linhas da tabela */
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Estilo para os botões Edit e Delete */
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    border: none;
+    border-radius: 5px;
+    margin: 0 5px;
+    padding: 3px 8px;
+    cursor: pointer;
+    color: #fff;
+}
+
+button:nth-child(1) {
+    background-color: orange;
+}
+
+button:nth-child(1):hover {
+    background-color: darkorange;
+}
+
+button:nth-child(2) {
+    background-color: rgba(237, 42, 42, 0.9);
+}
+
+button:nth-child(2):hover {
+    background-color: rgba(237, 42, 42, 0.7);
+}
+
+/* Estilo para as mensagens de alerta */
+.alert {
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #d6d8db;
+    border-radius: 4px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Estilo para o formulário de edição */
+.editForm {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 30%;
+    margin: 40px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.8); /* Fundo do formulário com opacidade */
+}
+
+.editForm label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.editForm input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+.editForm input[type="submit"] {
+    background-color: #28a745;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    width: calc(50% - 5px);
+    box-sizing: border-box;
+}
+
+.editForm input[type="submit"]:hover {
+    background-color: #218838;
+}
+
+/* Estilo para os botões Save e Cancel no formulário de edição */
+.editForm button[type="submit"] {
+    background-color: #28a745;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    width: calc(50% - 5px);
+    box-sizing: border-box;
+}
+
+.editForm button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+.editForm button[type="button"] {
+    background-color: rgba(237, 42, 42, 0.9);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    width: calc(50% - 5px);
+    box-sizing: border-box;
+}
+
+.editForm button[type="button"]:hover {
+    background-color: rgba(237, 42, 42, 0.7);
+}
+
+/* Container para os botões no formulário de edição */
+.editForm .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}

@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Pokemon</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 </head>
 <body>
-<h1>Edit Pokemon</h1>
-<form method="post" action="/edit">
+<h2>Edit Pokemon</h2>
+<form method="post" action="/edit" class="editForm">
     <input type="hidden" name="pokemonId" th:field="*{editedPokemon.pokemonId}" />
 
     <label for="pokemonName">Pokemon Name:</label>
@@ -49,7 +51,16 @@
     <input type="text" name="pokemonLegendary" th:field="*{editedPokemon.pokemonLegendary}" />
     <br/>
 
-    <input type="submit" value="Save" />
+    <div class="button-container">
+        <button type="submit">Save</button>
+        <button type="button" onclick="goBack()">Cancel</button>
+    </div>
+
 </form>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
 </body>
 </html>
