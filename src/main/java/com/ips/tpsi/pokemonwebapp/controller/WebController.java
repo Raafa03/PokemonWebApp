@@ -182,6 +182,38 @@ public class WebController {
         return mv;
     }
 
+    @GetMapping("/addPokemon")
+    public ModelAndView getAddPokemonForm() {
+        ModelAndView mv = new ModelAndView("addPokemon");
+        return mv;
+    }
+
+    @PostMapping("/addPokemon")
+    public ModelAndView addPokemon(String pokemonName, Integer pokemonTotal, Integer pokemonHp,
+                                   Integer pokemonAttack, Integer pokemonDefense, Integer pokemonSp_atk,
+                                   Integer pokemonSp_def, Integer pokemonSpeed, Integer pokemonGeneration,
+                                   String pokemonLegendary) {
+
+        // Crie um novo Pokémon com os dados fornecidos
+        PokemonCharacter newPokemon = new PokemonCharacter();
+        newPokemon.setPokemonName(pokemonName);
+        newPokemon.setPokemonTotal(pokemonTotal);
+        newPokemon.setPokemonHp(pokemonHp);
+        newPokemon.setPokemonAttack(pokemonAttack);
+        newPokemon.setPokemonDefense(pokemonDefense);
+        newPokemon.setPokemonSp_atk(pokemonSp_atk);
+        newPokemon.setPokemonSp_def(pokemonSp_def);
+        newPokemon.setPokemonSpeed(pokemonSpeed);
+        newPokemon.setPokemonGeneration(pokemonGeneration);
+        newPokemon.setPokemonLegendary(pokemonLegendary);
+
+        // Salve o novo Pokémon na base de dados
+        pokemonRepository.save(newPokemon);
+
+        ModelAndView mv = new ModelAndView("redirect:/pokemonlist");
+        return mv;
+    }
+
 
 }
 
