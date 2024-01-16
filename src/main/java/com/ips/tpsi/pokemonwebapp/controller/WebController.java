@@ -1,81 +1,56 @@
 package com.ips.tpsi.pokemonwebapp.controller;
 
-import com.ips.tpsi.pokemonwebapp.bc.UsernameAlreadyExistsException;
-import com.ips.tpsi.pokemonwebapp.bc.UsernameDoesntExistsException;
+import com.ips.tpsi.pokemonwebapp.Exceptions.UsernameAlreadyExistsException;
 import com.ips.tpsi.pokemonwebapp.bc.WebBc;
 import com.ips.tpsi.pokemonwebapp.entity.PokemonCharacter;
-
-import com.ips.tpsi.pokemonwebapp.entity.PokemonTypeLevel;
-
-
-import com.ips.tpsi.pokemonwebapp.entity.User;
 import com.ips.tpsi.pokemonwebapp.repository.PokemonCharacterRepository;
-
-
-import com.ips.tpsi.pokemonwebapp.repository.PokemonTypeLevelRepository;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.security.auth.login.LoginException;
 import java.util.List;
-import java.util.Optional;
 
 
 @Controller
 public class WebController {
+
     @Autowired
     WebBc bc;
 
-    public WebController(WebBc bc) {
-        this.bc = bc;
-    }
-
+    @Autowired
+    private PokemonCharacterRepository pokemonRepository;
 
     @GetMapping("/login")
     public ModelAndView getLogin() {
-        ModelAndView mv = new ModelAndView("index");
-        return mv;
-    }
-
-    @GetMapping({"/name"})
-    public ModelAndView getName() {
-        ModelAndView mv = new ModelAndView("index");
-        mv.addObject("name", "Vania");
-        return mv;
+        return new ModelAndView("index");
     }
 
 
-
-    @GetMapping({"/success"})
+    @GetMapping("/success")
     public ModelAndView loginSuccess() {
         ModelAndView mv = new ModelAndView("success");
         mv.addObject("message", "Welcome to the app!");
         return mv;
     }
 
-    @GetMapping({"/aboutme"})
-    public ModelAndView aboutme(){
-        ModelAndView mv = new ModelAndView("aboutme");
-        return mv;
+    @GetMapping("/aboutme")
+    public ModelAndView aboutme() {
+        return new ModelAndView("aboutme");
     }
-
 
     @GetMapping("/signup")
     public ModelAndView getSignUp() {
-        ModelAndView mv = new ModelAndView("signup");
-        return mv;
+        return new ModelAndView("signup");
     }
 
     @PostMapping("/signup")
     public ModelAndView signUp(String username, String password, HttpServletResponse response) {
-
         try {
-
-            bc.getRepositoryUserInfo(username, password);
+            bc.signUpUser(username, password);
             return new ModelAndView("redirect:/login");
         } catch (UsernameAlreadyExistsException e) {
             ModelAndView mv = new ModelAndView("signup");
@@ -84,38 +59,17 @@ public class WebController {
         }
     }
 
-
     @PostMapping("/login")
     public ModelAndView login(String uname, String psw, HttpServletResponse response) {
-        User user = bc.getRepositoryUserInfoByUsername(uname);
-        ModelAndView mv = new ModelAndView("index");
-
-        if (user != null) {
-            boolean isLoginValid = bc.isLoginValid(uname, psw);
-            if (isLoginValid) {
-                mv.setViewName("redirect:/success");
-            } else {
-                // Add an error message if login is not valid
-                mv.addObject("error", "Invalid username or password");
-            }
-        } else {
-            // Add an error message if the user does not exist
-            mv.addObject("error", "User does not exist");
+        try {
+            bc.validateLogin(uname, psw);
+            return new ModelAndView("redirect:/success");
+        } catch (LoginException e) {
+            ModelAndView mv = new ModelAndView("index");
+            mv.addObject("error", e.getMessage());
+            return mv;
         }
-        return mv;
     }
-
-
-
-
-    @Autowired
-    PokemonCharacterRepository pokemonRepository;
-    @Autowired
-    PokemonTypeLevelRepository pokemonTypeLevelRepository;
-
-
-
-
 
 
     @GetMapping("/edit/{id}")
@@ -126,39 +80,17 @@ public class WebController {
         return mv;
     }
 
-
     @PostMapping("/edit")
     public String editPokemonCharacter(@ModelAttribute PokemonCharacter editedPokemon, Model model) {
-        Optional<PokemonCharacter> optionalPokemonCharacter = pokemonRepository.findById(editedPokemon.getPokemonId());
-
-        if (optionalPokemonCharacter.isPresent()) {
-            PokemonCharacter existingPokemonCharacter = optionalPokemonCharacter.get();
-            existingPokemonCharacter.setPokemonName(editedPokemon.getPokemonName());
-            existingPokemonCharacter.setPokemonTotal(editedPokemon.getPokemonTotal());
-            existingPokemonCharacter.setPokemonHp(editedPokemon.getPokemonHp());
-            existingPokemonCharacter.setPokemonAttack(editedPokemon.getPokemonAttack());
-            existingPokemonCharacter.setPokemonDefense(editedPokemon.getPokemonDefense());
-            existingPokemonCharacter.setPokemonSp_atk(editedPokemon.getPokemonSp_atk());
-            existingPokemonCharacter.setPokemonSp_def(editedPokemon.getPokemonSp_def());
-            existingPokemonCharacter.setPokemonSpeed(editedPokemon.getPokemonSpeed());
-            existingPokemonCharacter.setPokemonGeneration(editedPokemon.getPokemonGeneration());
-            existingPokemonCharacter.setPokemonLegendary(editedPokemon.getPokemonLegendary());
-
-            pokemonRepository.save(existingPokemonCharacter);
-        } else {
-            // handle the case where the id doesn't exist in the database
-            // e.g., return an error message or redirect to an error page
-        }
-
+        bc.editPokemonCharacter(editedPokemon);
         return "redirect:/pokemonlist";
     }
 
     @PostMapping("/delete")
     public String deletePokemonCharacter(@ModelAttribute PokemonCharacter pokemonToDelete) {
-        pokemonRepository.deleteById(pokemonToDelete.getPokemonId());
+        bc.deletePokemonCharacter(pokemonToDelete.getPokemonId());
         return "redirect:/pokemonlist?deleteSuccess=true";
     }
-
 
     /*
     @GetMapping("/pokemonlist")
@@ -169,13 +101,11 @@ public class WebController {
         mv.addObject("deleteSuccess", deleteSuccess);
         return mv;
     }
-
      */
 
-
     @GetMapping("/pokemonlist")
-    public ModelAndView getPokemonList(@RequestParam(name = "deleteSuccess", required = false, defaultValue = "false") boolean deleteSuccess) {
-        List<PokemonCharacter> pokemons = pokemonRepository.findAll();
+    public ModelAndView getAllPokemons(@RequestParam(name = "deleteSuccess", required = false, defaultValue = "false") boolean deleteSuccess) {
+        List<PokemonCharacter> pokemons = bc.getAllPokemons();
         ModelAndView mv = new ModelAndView("pokemonlist");
         mv.addObject("pokemons", pokemons);
         mv.addObject("deleteSuccess", deleteSuccess);
@@ -184,8 +114,7 @@ public class WebController {
 
     @GetMapping("/addPokemon")
     public ModelAndView getAddPokemonForm() {
-        ModelAndView mv = new ModelAndView("addPokemon");
-        return mv;
+        return new ModelAndView("addPokemon");
     }
 
     @PostMapping("/addPokemon")
@@ -193,30 +122,8 @@ public class WebController {
                                    Integer pokemonAttack, Integer pokemonDefense, Integer pokemonSp_atk,
                                    Integer pokemonSp_def, Integer pokemonSpeed, Integer pokemonGeneration,
                                    String pokemonLegendary) {
-
-        // Crie um novo Pokémon com os dados fornecidos
-        PokemonCharacter newPokemon = new PokemonCharacter();
-        newPokemon.setPokemonName(pokemonName);
-        newPokemon.setPokemonTotal(pokemonTotal);
-        newPokemon.setPokemonHp(pokemonHp);
-        newPokemon.setPokemonAttack(pokemonAttack);
-        newPokemon.setPokemonDefense(pokemonDefense);
-        newPokemon.setPokemonSp_atk(pokemonSp_atk);
-        newPokemon.setPokemonSp_def(pokemonSp_def);
-        newPokemon.setPokemonSpeed(pokemonSpeed);
-        newPokemon.setPokemonGeneration(pokemonGeneration);
-        newPokemon.setPokemonLegendary(pokemonLegendary);
-
-        // Salve o novo Pokémon na base de dados
-        pokemonRepository.save(newPokemon);
-
-        ModelAndView mv = new ModelAndView("redirect:/pokemonlist");
-        return mv;
+        bc.addPokemon(pokemonName, pokemonTotal, pokemonHp, pokemonAttack, pokemonDefense, pokemonSp_atk,
+                pokemonSp_def, pokemonSpeed, pokemonGeneration, pokemonLegendary);
+        return new ModelAndView("redirect:/pokemonlist");
     }
-
-
 }
-
-
-
-

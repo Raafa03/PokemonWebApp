@@ -1,88 +1,113 @@
 package com.ips.tpsi.pokemonwebapp.bc;
 
-
+import com.ips.tpsi.pokemonwebapp.Exceptions.PokemonNotFoundException;
+import com.ips.tpsi.pokemonwebapp.Exceptions.UsernameAlreadyExistsException;
 import com.ips.tpsi.pokemonwebapp.entity.PokemonCharacter;
-import com.ips.tpsi.pokemonwebapp.entity.PokemonTypeLevel;
 import com.ips.tpsi.pokemonwebapp.entity.User;
 import com.ips.tpsi.pokemonwebapp.repository.PokemonCharacterRepository;
-import com.ips.tpsi.pokemonwebapp.repository.PokemonTypeLevelRepository;
 import com.ips.tpsi.pokemonwebapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import javax.security.auth.login.LoginException;
 import java.util.List;
 import java.util.Optional;
-
-// a anotação Service serve para definir serviços, neste caso o nosso BC que é onde está a componente de lógica de negócio
 
 @Service
 public class WebBc {
 
     @Autowired
-    UserRepository repository;
+    UserRepository userRepository;
 
+    @Autowired
+    PokemonCharacterRepository pokemonRepository;
 
-
-
-    public boolean isLoginValid(String name, String password) {
-        if (name != null && password != null) {
-            User user = repository.findUserByUsername(name);
-            if (password.equals(user.getPassword())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void getRepositoryUserInfo(String username, String password) {
-        if (repository.findUserByUsername(username) != null) {
+    public void signUpUser(String username, String password) {
+        if (userRepository.findUserByUsername(username) != null) {
             throw new UsernameAlreadyExistsException("O nome de usuário já existe.");
         } else {
             saveNewUser(username, password);
         }
     }
 
+    private void saveNewUser(String username, String password) {
+        User newUser = new User();
+        newUser.setUsername(username);
+        newUser.setPassword(password);
+        userRepository.save(newUser);
+    }
 
-    public void saveNewUser(String username, String password) {
-        // Verifica se o usuário já existe
-        if (repository.findUserByUsername(username) == null) {
-            User newUser = new User();
-            newUser.setUsername(username);
-            newUser.setPassword(password);
-            repository.save(newUser);
+    public void validateLogin(String username, String password) throws LoginException {
+        User user = userRepository.findUserByUsername(username);
+
+        if (user != null) {
+            if (!isLoginValid(user, password)) {
+                throw new LoginException("Invalid username or password");
+            }
         } else {
+            throw new LoginException("User does not exist");
+        }
+    }
 
+    private boolean isLoginValid(User user, String password) {
+        return password.equals(user.getPassword());
+    }
+
+    public void editPokemonCharacter(PokemonCharacter editedPokemon) {
+        Optional<PokemonCharacter> optionalPokemonCharacter = pokemonRepository.findById(editedPokemon.getPokemonId());
+
+        if (optionalPokemonCharacter.isPresent()) {
+            PokemonCharacter existingPokemonCharacter = optionalPokemonCharacter.get();
+
+            existingPokemonCharacter.setPokemonName(editedPokemon.getPokemonName());
+            existingPokemonCharacter.setPokemonTotal(editedPokemon.getPokemonTotal());
+            existingPokemonCharacter.setPokemonHp(editedPokemon.getPokemonHp());
+            existingPokemonCharacter.setPokemonAttack(editedPokemon.getPokemonAttack());
+            existingPokemonCharacter.setPokemonDefense(editedPokemon.getPokemonDefense());
+            existingPokemonCharacter.setPokemonSp_atk(editedPokemon.getPokemonSp_atk());
+            existingPokemonCharacter.setPokemonSp_def(editedPokemon.getPokemonSp_def());
+            existingPokemonCharacter.setPokemonSpeed(editedPokemon.getPokemonSpeed());
+            existingPokemonCharacter.setPokemonGeneration(editedPokemon.getPokemonGeneration());
+            existingPokemonCharacter.setPokemonLegendary(editedPokemon.getPokemonLegendary());
+
+            pokemonRepository.save(existingPokemonCharacter);
+        } else {
+            throw new PokemonNotFoundException("Pokemon with ID " + editedPokemon.getPokemonId() + " not found");
         }
     }
 
 
-    public User getRepositoryUserInfoByUsername(String username) {
-
-        return repository.findUserByUsername(username);
+    public void deletePokemonCharacter(Integer pokemonId) {
+        pokemonRepository.deleteById(pokemonId);
     }
-
-
-    @Autowired
-    private PokemonCharacterRepository pokemonRepository;
-
-
-    public void editPokemon(PokemonCharacter editedPokemon) {
-        pokemonRepository.save(editedPokemon);
-    }
-
 
     public PokemonCharacter getPokemonById(Integer id) {
         Optional<PokemonCharacter> optionalPokemon = pokemonRepository.findById(id);
         return optionalPokemon.orElse(null);
     }
 
+    public List<PokemonCharacter> getAllPokemons() {
+        return pokemonRepository.findAll();
+    }
+
+    public void addPokemon(String pokemonName, Integer pokemonTotal, Integer pokemonHp,
+                           Integer pokemonAttack, Integer pokemonDefense, Integer pokemonSp_atk,
+                           Integer pokemonSp_def, Integer pokemonSpeed, Integer pokemonGeneration,
+                           String pokemonLegendary) {
+        PokemonCharacter newPokemon = new PokemonCharacter();
+        newPokemon.setPokemonName(pokemonName);
+        newPokemon.setPokemonTotal(pokemonTotal);
+        newPokemon.setPokemonHp(pokemonHp);
+        newPokemon.setPokemonAttack(pokemonAttack);
+        newPokemon.setPokemonDefense(pokemonDefense);
+        newPokemon.setPokemonSp_atk(pokemonSp_atk);
+        newPokemon.setPokemonSp_def(pokemonSp_def);
+        newPokemon.setPokemonSpeed(pokemonSpeed);
+        newPokemon.setPokemonGeneration(pokemonGeneration);
+        newPokemon.setPokemonLegendary(pokemonLegendary);
 
 
-
-
+        pokemonRepository.save(newPokemon);
+    }
 
 }
-
-
-
