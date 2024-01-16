@@ -37,9 +37,9 @@ public class WebController {
         return mv;
     }
 
-    @GetMapping("/aboutme")
-    public ModelAndView aboutme() {
-        return new ModelAndView("aboutme");
+    @GetMapping("/aboutus")
+    public ModelAndView aboutus() {
+        return new ModelAndView("aboutus");
     }
 
     @GetMapping("/signup")

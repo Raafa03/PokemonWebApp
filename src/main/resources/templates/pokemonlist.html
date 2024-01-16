@@ -20,6 +20,8 @@
 <p th:if="${deleteSuccess}" class="alert alert-success">Pokemon deleted successfully</p>
 <p th:if="${deleteError}" class="alert alert-danger">Error deleting pokemon</p>
 
+<a th:href="@{/addPokemon}"> <button type="button" class="addButton">Add Pokemon</button> </a>
+
 <table>
     <thead>
     <tr>
@@ -36,7 +38,6 @@
         <th>Speed</th>
         <th>Generation</th>
         <th>Legendary</th>
-        <a th:href="@{/addPokemon}"> <button type="button">Add Pokemon</button> </a>
         <th>Actions</th>
     </tr>
     </thead>
@@ -45,6 +46,7 @@
         <td th:text="${pokemon.pokemonId}"></td>
         <td th:text="${pokemon.pokemonName}"></td>
         <td th:if="${pokemon.types != null and pokemon.types.size() > 0}" th:text="${pokemon.types[0].pokemonTypeFK.typeDesc}"></td>
+        <td th:unless="${pokemon.types != null and pokemon.types.size() > 0}">No first type</td>
         <td th:if="${pokemon.types != null and pokemon.types.size() > 1}" th:text="${pokemon.types[1].pokemonTypeFK.typeDesc}"></td>
         <td th:unless="${pokemon.types != null and pokemon.types.size() > 1}">No second type</td>
         <td th:text="${pokemon.pokemonTotal}"></td>
