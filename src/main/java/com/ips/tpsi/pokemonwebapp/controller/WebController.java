@@ -3,7 +3,6 @@ package com.ips.tpsi.pokemonwebapp.controller;
 import com.ips.tpsi.pokemonwebapp.Exceptions.UsernameAlreadyExistsException;
 import com.ips.tpsi.pokemonwebapp.bc.WebBc;
 import com.ips.tpsi.pokemonwebapp.entity.PokemonCharacter;
-import com.ips.tpsi.pokemonwebapp.repository.PokemonCharacterRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,8 +20,6 @@ public class WebController {
     @Autowired
     WebBc bc;
 
-    @Autowired
-    private PokemonCharacterRepository pokemonRepository;
 
     @GetMapping("/login")
     public ModelAndView getLogin() {
@@ -92,23 +89,15 @@ public class WebController {
         return "redirect:/pokemonlist?deleteSuccess=true";
     }
 
-    /*
-    @GetMapping("/pokemonlist")
-    public ModelAndView getPokemonList(@RequestParam(name = "deleteSuccess", required = false, defaultValue = "false") boolean deleteSuccess) {
-        List<PokemonCharacter> pokemons = pokemonRepository.findAll();
-        ModelAndView mv = new ModelAndView("pokemonlist");
-        mv.addObject("pokemons", pokemons);
-        mv.addObject("deleteSuccess", deleteSuccess);
-        return mv;
-    }
-     */
 
     @GetMapping("/pokemonlist")
-    public ModelAndView getAllPokemons(@RequestParam(name = "deleteSuccess", required = false, defaultValue = "false") boolean deleteSuccess) {
-        List<PokemonCharacter> pokemons = bc.getAllPokemons();
+    public ModelAndView getAllPokemons(@RequestParam(name = "deleteSuccess", required = false, defaultValue = "false") boolean deleteSuccess,
+                                       @RequestParam(name = "searchName", required = false) String searchName) {
+        List<PokemonCharacter> pokemons = bc.getAllPokemons(searchName);
         ModelAndView mv = new ModelAndView("pokemonlist");
         mv.addObject("pokemons", pokemons);
         mv.addObject("deleteSuccess", deleteSuccess);
+        mv.addObject("searchName", searchName);
         return mv;
     }
 

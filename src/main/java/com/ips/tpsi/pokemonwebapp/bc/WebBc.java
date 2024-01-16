@@ -86,9 +86,6 @@ public class WebBc {
         return optionalPokemon.orElse(null);
     }
 
-    public List<PokemonCharacter> getAllPokemons() {
-        return pokemonRepository.findAll();
-    }
 
     public void addPokemon(String pokemonName, Integer pokemonTotal, Integer pokemonHp,
                            Integer pokemonAttack, Integer pokemonDefense, Integer pokemonSp_atk,
@@ -108,6 +105,14 @@ public class WebBc {
 
 
         pokemonRepository.save(newPokemon);
+    }
+
+    public List<PokemonCharacter> getAllPokemons(String searchName) {
+        if (searchName != null && !searchName.isEmpty()) {
+            return pokemonRepository.findByPokemonNameContainingIgnoreCase(searchName);
+        } else {
+            return pokemonRepository.findAll();
+        }
     }
 
 }

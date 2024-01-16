@@ -12,9 +12,6 @@ import java.util.List;
 
 
 public interface PokemonTypeLevelRepository extends JpaRepository<PokemonTypeLevel, Integer> {
-
-
-    void deleteByPokemonCharacterFK(@Param("pokemonCharacterFK") PokemonCharacter pokemonCharacterFK);
 }
 
 
