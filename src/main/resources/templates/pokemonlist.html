@@ -19,9 +19,19 @@
 <form th:action="@{/pokemonlist}" method="get" class="search">
     <label for="searchName">Search by Name:</label>
     <input type="text" id="searchName" name="searchName" th:value="${searchName}" />
+
+    <div>
+        <label for="showActive">Show Active:</label>
+        <input type="checkbox" id="showActive" name="showActive" checked />
+
+        <label for="showInactive">Show Inactive:</label>
+        <input type="checkbox" id="showInactive" name="showInactive" checked />
+    </div>
+
     <button type="submit" class="btnSearch">Search</button>
     <a th:href="@{/addPokemon}"> <button type="button" class="addButton">Add Pokemon</button> </a>
 </form>
+
 
 <p th:if="${deleteSuccess}" class="alert alert-success">Pokemon deleted successfully</p>
 <p th:if="${deleteError}" class="alert alert-danger">Error deleting pokemon</p>
@@ -42,6 +52,7 @@
         <th>Speed</th>
         <th>Generation</th>
         <th>Legendary</th>
+        <th>Is Inactive</th>
         <th>Actions</th>
     </tr>
     </thead>
@@ -62,6 +73,7 @@
         <td th:text="${pokemon.pokemonSpeed}"></td>
         <td th:text="${pokemon.pokemonGeneration}"></td>
         <td th:text="${pokemon.pokemonLegendary}"></td>
+        <td th:text="${pokemon.isDisabled ? 'Sim' : 'Não'}"></td>
         <td class="button-container">
             <a th:href="@{/edit/{id}(id=${pokemon.pokemonId})}"> <button type="button"><span class="material-symbols-outlined">edit</span></button> </a>
             <form th:method="post" th:action="@{/delete}" th:object="${pokemon}" id="deleteForm">

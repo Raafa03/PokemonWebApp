@@ -52,6 +52,9 @@ public class PokemonCharacter {
     @Column(name = "legendary")
     private String pokemonLegendary;
 
+    @Column(name = "is_disabled", columnDefinition = "TINYINT(1) DEFAULT 0")
+    private Boolean isDisabled;
+
     @OneToMany(mappedBy = "pokemonCharacterFK", fetch = FetchType.LAZY)
     private List<PokemonTypeLevel> types;
 

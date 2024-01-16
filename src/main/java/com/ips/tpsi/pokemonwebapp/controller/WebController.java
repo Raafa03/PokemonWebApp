@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.security.auth.login.LoginException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -91,15 +92,36 @@ public class WebController {
 
 
     @GetMapping("/pokemonlist")
-    public ModelAndView getAllPokemons(@RequestParam(name = "deleteSuccess", required = false, defaultValue = "false") boolean deleteSuccess,
-                                       @RequestParam(name = "searchName", required = false) String searchName) {
-        List<PokemonCharacter> pokemons = bc.getAllPokemons(searchName);
+    public ModelAndView getAllPokemons(
+            @RequestParam(name = "deleteSuccess", required = false, defaultValue = "false") boolean deleteSuccess,
+            @RequestParam(name = "searchName", required = false) String searchName,
+            @RequestParam(name = "showActive", defaultValue = "true") boolean showActive,
+            @RequestParam(name = "showInactive", defaultValue = "true") boolean showInactive) {
+
+        List<PokemonCharacter> pokemons;
+
+        if (showActive && showInactive) {
+            // Se ambas estiverem marcadas, retorna todos os Pokémon
+            pokemons = bc.getAllPokemons(searchName);
+        } else if (showActive) {
+            // Se apenas "Show Active" estiver marcado, retorna Pokémon ativos
+            pokemons = bc.getActivePokemons(searchName);
+        } else if (showInactive) {
+            // Se apenas "Show Inactive" estiver marcado, retorna Pokémon inativos
+            pokemons = bc.getInactivePokemons(searchName);
+        } else {
+            // Se ambas estiverem desmarcadas, retorna uma lista vazia ou uma mensagem de aviso, conforme necessário
+            pokemons = new ArrayList<>();
+        }
+
         ModelAndView mv = new ModelAndView("pokemonlist");
         mv.addObject("pokemons", pokemons);
         mv.addObject("deleteSuccess", deleteSuccess);
         mv.addObject("searchName", searchName);
         return mv;
     }
+
+
 
     @GetMapping("/addPokemon")
     public ModelAndView getAddPokemonForm() {

@@ -69,6 +69,7 @@ public class WebBc {
             existingPokemonCharacter.setPokemonSpeed(editedPokemon.getPokemonSpeed());
             existingPokemonCharacter.setPokemonGeneration(editedPokemon.getPokemonGeneration());
             existingPokemonCharacter.setPokemonLegendary(editedPokemon.getPokemonLegendary());
+            existingPokemonCharacter.setIsDisabled(editedPokemon.getIsDisabled());
 
             pokemonRepository.save(existingPokemonCharacter);
         } else {
@@ -102,6 +103,7 @@ public class WebBc {
         newPokemon.setPokemonSpeed(pokemonSpeed);
         newPokemon.setPokemonGeneration(pokemonGeneration);
         newPokemon.setPokemonLegendary(pokemonLegendary);
+        newPokemon.setIsDisabled(false);
 
 
         pokemonRepository.save(newPokemon);
@@ -114,5 +116,24 @@ public class WebBc {
             return pokemonRepository.findAll();
         }
     }
+
+    public List<PokemonCharacter> getActivePokemons(String searchName) {
+        if (searchName != null && !searchName.isEmpty()) {
+            return pokemonRepository.findByPokemonNameContainingIgnoreCase(searchName);
+        } else {
+            return pokemonRepository.findActivePokemon();
+        }
+    }
+
+    public List<PokemonCharacter> getInactivePokemons(String searchName) {
+        if (searchName != null && !searchName.isEmpty()) {
+            return pokemonRepository.findInactivePokemonByNameContainingIgnoreCase(searchName);
+        } else {
+            return pokemonRepository.findInactivePokemon();
+        }
+    }
+
+
+
 
 }
