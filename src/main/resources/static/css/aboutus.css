@@ -7,7 +7,7 @@
     padding: 10px;
     background-color: #f2f2f2;
     border-radius: 10px;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.6);
 
 }
 
@@ -21,16 +21,19 @@
 .team-members {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center; /* Adicionado para centralizar os membros da equipe */
     margin: 20px 0;
+    text-align: center;
 }
 
 .team-member {
-    width: 30%;
-    margin: 0 10px;
+    width: 30%; /* Ajuste a largura conforme necessário */
+    margin: 10px;
     padding: 20px;
-    background-color: #f2f2f2;
     border-radius: 10px;
+    background: rgba(255, 255, 255, 0.6);
 }
+
 
 .team-member-name {
     font-weight: bold;
