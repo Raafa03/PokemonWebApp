@@ -86,9 +86,6 @@ public class WebBc {
         return optionalPokemon.orElse(null);
     }
 
-    public List<PokemonCharacter> getAllPokemons() {
-        return pokemonRepository.findAll();
-    }
 
     public void addPokemon(String pokemonName, Integer pokemonTotal, Integer pokemonHp,
                            Integer pokemonAttack, Integer pokemonDefense, Integer pokemonSp_atk,
