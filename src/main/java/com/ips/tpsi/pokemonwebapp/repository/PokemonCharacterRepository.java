@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -23,5 +24,7 @@ public interface PokemonCharacterRepository extends JpaRepository<PokemonCharact
             "WHERE p.pokemonId = :id")
     Optional<PokemonCharacter> findByIdWithTypes(@Param("id") Integer id);
 
+
+    List<PokemonCharacter> findByPokemonNameContainingIgnoreCase(String pokemonName);
 }
 

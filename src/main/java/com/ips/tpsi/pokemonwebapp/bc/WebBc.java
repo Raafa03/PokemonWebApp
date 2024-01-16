@@ -110,4 +110,12 @@ public class WebBc {
         pokemonRepository.save(newPokemon);
     }
 
+    public List<PokemonCharacter> getAllPokemons(String searchName) {
+        if (searchName != null && !searchName.isEmpty()) {
+            return pokemonRepository.findByPokemonNameContainingIgnoreCase(searchName);
+        } else {
+            return pokemonRepository.findAll();
+        }
+    }
+
 }

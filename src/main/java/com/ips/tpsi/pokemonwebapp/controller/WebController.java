@@ -22,7 +22,7 @@ public class WebController {
     WebBc bc;
 
     @Autowired
-    private PokemonCharacterRepository pokemonRepository;
+    private PokemonCharacterRepository pokemonCharacterRepository;
 
     @GetMapping("/login")
     public ModelAndView getLogin() {
@@ -104,11 +104,13 @@ public class WebController {
      */
 
     @GetMapping("/pokemonlist")
-    public ModelAndView getAllPokemons(@RequestParam(name = "deleteSuccess", required = false, defaultValue = "false") boolean deleteSuccess) {
-        List<PokemonCharacter> pokemons = bc.getAllPokemons();
+    public ModelAndView getAllPokemons(@RequestParam(name = "deleteSuccess", required = false, defaultValue = "false") boolean deleteSuccess,
+                                       @RequestParam(name = "searchName", required = false) String searchName) {
+        List<PokemonCharacter> pokemons = bc.getAllPokemons(searchName);
         ModelAndView mv = new ModelAndView("pokemonlist");
         mv.addObject("pokemons", pokemons);
         mv.addObject("deleteSuccess", deleteSuccess);
+        mv.addObject("searchName", searchName); // Passa o nome de pesquisa para manter o valor no formulário
         return mv;
     }
 
