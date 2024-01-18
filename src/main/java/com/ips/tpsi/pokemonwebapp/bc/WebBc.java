@@ -3,10 +3,8 @@ package com.ips.tpsi.pokemonwebapp.bc;
 import com.ips.tpsi.pokemonwebapp.Exceptions.PokemonNotFoundException;
 import com.ips.tpsi.pokemonwebapp.Exceptions.UsernameAlreadyExistsException;
 import com.ips.tpsi.pokemonwebapp.entity.PokemonCharacter;
-import com.ips.tpsi.pokemonwebapp.entity.PokemonTypeLevel;
 import com.ips.tpsi.pokemonwebapp.entity.User;
 import com.ips.tpsi.pokemonwebapp.repository.PokemonCharacterRepository;
-import com.ips.tpsi.pokemonwebapp.repository.PokemonTypeLevelRepository;
 import com.ips.tpsi.pokemonwebapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,22 +16,15 @@ import java.util.Optional;
 @Service
 public class WebBc {
 
+    @Autowired
     UserRepository userRepository;
 
-    PokemonCharacterRepository pokemonRepository;
-
-    PokemonTypeLevelRepository pokemonTypeLevelRepository;
-
     @Autowired
-    public WebBc(UserRepository userRepository, PokemonCharacterRepository pokemonRepository, PokemonTypeLevelRepository pokemonTypeLevelRepository) {
-        this.userRepository = userRepository;
-        this.pokemonRepository = pokemonRepository;
-        this.pokemonTypeLevelRepository = pokemonTypeLevelRepository;
-    }
+    PokemonCharacterRepository pokemonRepository;
 
     public void signUpUser(String username, String password) {
         if (userRepository.findUserByUsername(username) != null) {
-            throw new UsernameAlreadyExistsException("Username already exist.");
+            throw new UsernameAlreadyExistsException("O nome de usuário já existe.");
         } else {
             saveNewUser(username, password);
         }
@@ -123,11 +114,5 @@ public class WebBc {
             return pokemonRepository.findAll();
         }
     }
-
-    public List<PokemonTypeLevel> getPokemonType1FromId(PokemonCharacter pokemonCharacter) {
-        return pokemonTypeLevelRepository.findAllPokemonTypeLevelByPokemonCharacterFK(pokemonCharacter);
-
-    }
-
 
 }

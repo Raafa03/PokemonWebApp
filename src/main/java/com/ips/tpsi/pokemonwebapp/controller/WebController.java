@@ -3,8 +3,6 @@ package com.ips.tpsi.pokemonwebapp.controller;
 import com.ips.tpsi.pokemonwebapp.Exceptions.UsernameAlreadyExistsException;
 import com.ips.tpsi.pokemonwebapp.bc.WebBc;
 import com.ips.tpsi.pokemonwebapp.entity.PokemonCharacter;
-import com.ips.tpsi.pokemonwebapp.entity.PokemonType;
-import com.ips.tpsi.pokemonwebapp.entity.PokemonTypeLevel;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -76,18 +74,11 @@ public class WebController {
         PokemonCharacter pokemonToEdit = bc.getPokemonById(id);
         ModelAndView mv = new ModelAndView("edit");
         mv.addObject("editedPokemon", pokemonToEdit);
-
-        // get to find our types
-        List<PokemonTypeLevel> pokemonTypeLevels = bc.getPokemonType1FromId(pokemonToEdit);
-        String type1 = pokemonTypeLevels.get(0).getPokemonTypeFK().getTypeDesc();
-        String type2 = pokemonTypeLevels.get(1).getPokemonTypeFK().getTypeDesc();
-        mv.addObject("editedPokemonType1", type1);
-        mv.addObject("editedPokemonType2", type2);
         return mv;
     }
 
     @PostMapping("/edit")
-    public String editPokemonCharacter(@ModelAttribute PokemonCharacter editedPokemon, @ModelAttribute String editedPokemonType1, Model model) {
+    public String editPokemonCharacter(@ModelAttribute PokemonCharacter editedPokemon, Model model) {
         bc.editPokemonCharacter(editedPokemon);
         return "redirect:/pokemonlist";
     }
