@@ -16,15 +16,16 @@
     </nav>
 </div>
 <h2>Pokémon List</h2>
-<form th:action="@{/pokemonlist}" method="get" class="search">
+<form th:action="@{/pokemonlist}" method="get">
     <label for="searchName">Search by Name:</label>
     <input type="text" id="searchName" name="searchName" th:value="${searchName}" />
-    <button type="submit" class="btnSearch">Search</button>
-    <a th:href="@{/addPokemon}"> <button type="button" class="addButton">Add Pokemon</button> </a>
+    <button type="submit">Search</button>
 </form>
 
 <p th:if="${deleteSuccess}" class="alert alert-success">Pokemon deleted successfully</p>
 <p th:if="${deleteError}" class="alert alert-danger">Error deleting pokemon</p>
+
+<a th:href="@{/addPokemon}"> <button type="button" class="addButton">Add Pokemon</button> </a>
 
 <table>
     <thead>
