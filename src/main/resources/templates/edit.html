@@ -24,7 +24,7 @@
     <br/>
 
     <label for="pokemonAttack">Attack:</label>
-    <input type="number" name="pokemonAttack" th:field="*{editedPokemon.pokemonAttack}" />
+    <input id="pokemonAttack" type="number" name="pokemonAttack" th:field="*{editedPokemon.pokemonAttack}" />
     <br/>
 
     <label for="pokemonDefense">Defense:</label>
@@ -49,6 +49,14 @@
 
     <label for="pokemonLegendary">Legendary:</label>
     <input type="text" name="pokemonLegendary" th:field="*{editedPokemon.pokemonLegendary}" />
+    <br/>
+
+    <label for="editedPokemonType1">Type 1:</label>
+    <input id="editedPokemonType1" type="text" name="editedPokemonType1" th:value="${editedPokemonType1}"/>
+    <br/>
+
+    <label for="editedPokemonType2">Type 2:</label>
+    <input id="editedPokemonType2" type="text" name="editedPokemonType2" th:value="${editedPokemonType2}" />
     <br/>
 
     <div class="button-container">
